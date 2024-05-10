@@ -22,12 +22,12 @@ class EventController extends Controller
     public function create_event(Request $request)
     {
         // Formdan gelen verileri doğrulama
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'description' => 'required|string',
-        //     'date' => 'required|date',
-        //     'time' => 'required|date_format:H:i',
-        // ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'date' => 'required|date',
+            'time' => 'required|date_format:H:i',
+        ]);
 
         $expireDate = $request->date.' '. $request->time; // '2022-12-31 12:00'; // Hedef tarih
         $expireDate = strtotime($expireDate);
@@ -107,7 +107,6 @@ class EventController extends Controller
                 $event->joined = false;
             }
         }
-
 
         return view('all_events', compact('all_events'));
     }
