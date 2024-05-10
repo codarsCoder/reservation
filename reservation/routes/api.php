@@ -26,6 +26,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('create-event', [ApiEventController::class, 'create_event']);
     Route::put('update-event', [ApiEventController::class, 'update_event']);
     Route::delete('delete-event', [ApiEventController::class, 'delete_event']);
+    Route::get('my-events', [ApiEventController::class, 'my_events']);
+    Route::post('join-event', [ApiEventController::class, 'join_event']);
+    Route::post('unjoin-event', [ApiEventController::class, 'unjoin_event']);
 
 });
 

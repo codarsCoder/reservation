@@ -13,7 +13,8 @@ class RegistrationController extends Controller
     public function join_event($id)
     {
 
-        // Tüm etkinlikleri al
+
+        // Geri dönüş için sayfaya data hazırla
         $all_events = Event::all();
 
         // Kullanıcının satın aldığı etkinlikleri al
@@ -31,6 +32,7 @@ class RegistrationController extends Controller
             }
         }
 
+        //Etkinlik kayıt
         $event = Event::find($id);
         // Belirli bir etkinlik için kullanıcının kaydını kontrol ediyoruz
         $register = Registration::where('event_id', $id)
