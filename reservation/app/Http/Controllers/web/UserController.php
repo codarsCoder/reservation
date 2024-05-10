@@ -16,7 +16,7 @@ class UserController extends Controller
             // Giriş verilerini doğrula
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
+                'email' => 'required|string|email|unique:users,email',
                 'password' => 'required|string|min:8',
             ]);
 
