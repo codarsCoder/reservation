@@ -12,35 +12,39 @@ class UserController extends Controller
 {
     public function register(Request $request)
     {
-        if ($request->isMethod('post')) {
-            // Giriş verilerini doğrula
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|unique:users,email',
-                'password' => 'required|string|min:8',
-            ]);
+        // Giriş verilerini doğrula
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users,email',
+            'password' => 'required|string|min:8',
+        ]);
 
-            // Doğrulama başarısızsa hata mesajlarını gönder
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
-
-            // Kullanıcı kayıt verilerini alın
-            $data = $request->all();
-
-
-
-            // Kullanıcıyı veritabanına kaydet
-            $user = User::create($data);
-
-            // Kullanıcı kayıt işlemi tamamlandıktan sonra giriş yapabilir
-            Auth::login($user);
-
-            return response()->json(['status' => 200]);
+        // Doğrulama başarısızsa hata mesajlarını gönder
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        return view('home');
+        // Kullanıcı kayıt verilerini alın
+        $data = $request->all();
+
+        // Şifreyi şifreleme işlemi
+        $data['password'] = bcrypt($request->password);
+
+        // Kullanıcıyı veritabanına kaydet
+        $user = User::create($data);
+
+        // Kullanıcıya doğrulama e-postası gönder
+        // Mail::to($user->email)->send(new VerifyEmail($user));
+
+        // Başarılı kayıt mesajı göster
+        session()->flash('success', 'Registration successful!');
+
+        // Kullanıcı kayıt işlemi tamamlandıktan sonra giriş yapabilir
+        Auth::login($user);
+
+        return redirect()->route('home');
     }
+
 
 
     public function login(Request $request)

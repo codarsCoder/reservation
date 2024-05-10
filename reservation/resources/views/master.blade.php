@@ -25,10 +25,20 @@
     @yield('script')
 
     <script>
-        setTimeout(function() {
-            document.querySelector('.alert').classList.add('d-none');
-        }, 3000);
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            const delay = 3000; // 3 saniye
+
+            if (alerts.length > 0) {
+                setTimeout(function() {
+                    alerts.forEach(function(alert) {
+                        alert.classList.add('d-none');
+                    });
+                }, delay);
+            }
+        });
     </script>
+
 
 </body>
 

@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Login</title>
+    <title>Register</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
@@ -129,9 +129,9 @@
 
 
     <main class="form-signin w-100 m-auto">
-        <form action="{{ route('login') }}" method="post">
+        <form action="{{ route('register') }}" method="post">
             @csrf
-            <h1 class="h3 mb-3 fw-normal">Welcome to Eventor Please sign in</h1>
+            <h1 class="h3 mb-3 fw-normal">Eventor Register Page</h1>
 
             @if ($errors->any())
                 @foreach ($errors->all() as $error)
@@ -140,6 +140,11 @@
                     </div>
                 @endforeach
             @endif
+            <div class="form-floating mb-2">
+                <input type="name" name="name" class="form-control" id="floatingInput"
+                    placeholder="name@example.com">
+                <label for="floatingInput">Name</label>
+            </div>
             <div class="form-floating mb-2">
                 <input type="email" name="email" class="form-control" id="floatingInput"
                     placeholder="name@example.com">
@@ -151,8 +156,9 @@
                 <label for="floatingPassword">Password</label>
             </div>
 
-            <button class="btn btn-primary w-100 py-2 mb-2" type="submit">Sign in</button>
-            <p> Don't have an account? <a href="{{ route('register.page') }}">Register</a></p>
+
+            <button class="btn btn-primary w-100 py-2 mb-2" type="submit">Register</button>
+            <p>Already have an account? <a href="{{ route('login.page') }}">Login</a></p>
         </form>
     </main>
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
