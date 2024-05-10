@@ -91,7 +91,7 @@ class EventController extends Controller
 
         // Tüm etkinlikleri al
         $currentTimestamp = time();
-        $all_events = Event::where('expire_at', '>=', $currentTimestamp)->all();
+        $all_events = Event::where('expire_at', '>=', $currentTimestamp)->get();
 
         // Kullanıcının satın aldığı etkinlikleri al
         $joined_events = Registration::where('user_id', Auth::user()->id)->pluck('event_id')->toArray();
