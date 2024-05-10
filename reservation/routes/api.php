@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\ApiEventController;
 use App\Http\Controllers\api\ApiUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,12 +18,18 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('auth:api')->group(function () {
-Route::post('user', function (Request $request) {
-    return $request->user();
-});
+
+    Route::post('user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::post('create-event', [ApiEventController::class, 'create_event']);
+    Route::put('update-event', [ApiEventController::class, 'update_event']);
+    Route::delete('delete-event', [ApiEventController::class, 'delete_event']);
 
 });
 
 Route::post('login', [ApiUserController::class, 'login']);
 
 Route::post('register', [ApiUserController::class, 'register']);
+
