@@ -99,10 +99,10 @@ class ApiEventController extends Controller
     public function all_events()
     {
 
+        $currentTimestamp = time();
+        $all_events = Event::where('expire_at', '>=', $currentTimestamp)->get();
 
-        $all_events = Event::where('expire_at', '>=', now())->get();
-
-        return response()->json(['events' => $events], 200);
+        return response()->json(['events' => $all_events], 200);
 
     }
 
