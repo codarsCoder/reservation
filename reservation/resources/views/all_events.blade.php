@@ -12,7 +12,7 @@ Join To Events
     <h4>All Events</h4>
     @if(isset($success))
     <div class="alert alert-success" role="alert">
-        {{ $success }}s
+        {{ $success }}
     </div>
 @endif
 
