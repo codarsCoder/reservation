@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->date('date');
             $table->time('time');
+            $table->timestamp('expire_at')->nullable();
             $table->timestamps();
         });
     }

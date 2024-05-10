@@ -33,6 +33,6 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::post('login', [ApiUserController::class, 'login']);
-
 Route::post('register', [ApiUserController::class, 'register']);
+Route::get('all-events', [ApiEventController::class, 'all_events']);
 

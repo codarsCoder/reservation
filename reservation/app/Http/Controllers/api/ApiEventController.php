@@ -25,6 +25,8 @@ class ApiEventController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        $expireDate = $request->date.' '. $request->time; // '2022-12-31 12:00'; // Hedef tarih
+        $expireTimestamp = strtotime($expireDate);
         // Etkinlik oluşturulacak veriyi oluşturma
         $event = new Event();
         $event->user_id = Auth::user()->id;
@@ -32,6 +34,7 @@ class ApiEventController extends Controller
         $event->description = $request->description;
         $event->date = $request->date;
         $event->time = $request->time;
+        $event->expire_at = $expireTimestamp;
 
         // Veriyi veritabanına kaydetme
         $event->save();
@@ -86,6 +89,25 @@ class ApiEventController extends Controller
         $joined_events = Registration::where('user_id', Auth::user()->id)->with('event')->get();
 
         return response()->json(['my_events' => $events, 'joined_events' => $joined_events], 200);
+    }
+
+    public function all_events()
+    {
+
+        $currentDate = date('Y-m-d');
+        $currentTime = date('H:i');
+
+        $events = Event::where(function ($query) use ($currentDate, $currentTime) {
+            $query->where('date', '>', $currentDate)
+                ->orWhere(function ($query) use ($currentDate, $currentTime) {
+                    $query->where('date', '=', $currentDate)
+                        ->where('time', '>=', $currentTime);
+                });
+        })
+            ->get();
+
+        return response()->json(['events' => $events], 200);
+
     }
 
     public function join_event(Request $request)
