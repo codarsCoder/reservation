@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Event;
 use App\Models\Registration;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,6 +29,9 @@ class EventController extends Controller
         //     'time' => 'required|date_format:H:i',
         // ]);
 
+        $expireDate = $request->date.' '. $request->time; // '2022-12-31 12:00'; // Hedef tarih
+        $expireDate = strtotime($expireDate);
+
         // Etkinlik oluşturulacak veriyi oluşturma
         $event = new Event();
         $event->user_id = Auth::user()->id;
@@ -35,6 +39,7 @@ class EventController extends Controller
         $event->description = $request->description;
         $event->date = $request->date;
         $event->time = $request->time;
+        $event->expire_at = $expireDate;
 
         // Veriyi veritabanına kaydetme
         $event->save();
@@ -53,12 +58,16 @@ class EventController extends Controller
     }
     public function update_event(Request $request, $id)
     {
+        $expireDate = $request->date.' '. $request->time; // '2022-12-31 12:00'; // Hedef tarih
+        $expireDate = strtotime($expireDate);
+
         // Formdan gelen verileri görme
         $event = Event::where('user_id', Auth::user()->id)->find($id);
         $event->name = $request->name;
         $event->description = $request->description;
         $event->date = $request->date;
         $event->time = $request->time;
+        $event->expire_at = $expireDate;
 
         // Veriyi veritabanına kaydetme
         $event->save();

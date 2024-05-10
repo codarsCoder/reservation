@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Models\Event;
 use App\Http\Controllers\Controller;
 use App\Models\Registration;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -26,7 +27,7 @@ class ApiEventController extends Controller
         }
 
         $expireDate = $request->date.' '. $request->time; // '2022-12-31 12:00'; // Hedef tarih
-        $expireTimestamp = strtotime($expireDate);
+        $expireDate = strtotime($expireDate);
         // Etkinlik oluşturulacak veriyi oluşturma
         $event = new Event();
         $event->user_id = Auth::user()->id;
@@ -34,7 +35,7 @@ class ApiEventController extends Controller
         $event->description = $request->description;
         $event->date = $request->date;
         $event->time = $request->time;
-        $event->expire_at = $expireTimestamp;
+        $event->expire_at = $expireDate;
 
         // Veriyi veritabanına kaydetme
         $event->save();
@@ -57,11 +58,15 @@ class ApiEventController extends Controller
             return response()->json(['message' => 'Event id is required.'], 422);
         }
 
+        $expireDate = $request->date.' '. $request->time; // '2022-12-31 12:00'; // Hedef tarih
+        $expireDate = strtotime($expireDate);
+
         $event = Event::where('user_id', Auth::user()->id)->find($request->id);
         $event->name = $request->name;
         $event->description = $request->description;
         $event->date = $request->date;
         $event->time = $request->time;
+        $event->expire_at = $expireDate;
 
         $event->save();
 
@@ -94,17 +99,8 @@ class ApiEventController extends Controller
     public function all_events()
     {
 
-        $currentDate = date('Y-m-d');
-        $currentTime = date('H:i');
 
-        $events = Event::where(function ($query) use ($currentDate, $currentTime) {
-            $query->where('date', '>', $currentDate)
-                ->orWhere(function ($query) use ($currentDate, $currentTime) {
-                    $query->where('date', '=', $currentDate)
-                        ->where('time', '>=', $currentTime);
-                });
-        })
-            ->get();
+        $all_events = Event::where('expire_at', '>=', now())->get();
 
         return response()->json(['events' => $events], 200);
 
