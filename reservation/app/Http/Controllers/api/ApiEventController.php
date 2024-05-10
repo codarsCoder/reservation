@@ -53,7 +53,7 @@ class ApiEventController extends Controller
         if (!$request->has('id')) {
             return response()->json(['message' => 'Event id is required.'], 422);
         }
-        
+
         $event = Event::where('user_id', Auth::user()->id)->find($request->id);
         $event->name = $request->name;
         $event->description = $request->description;
@@ -109,6 +109,28 @@ class ApiEventController extends Controller
             $newRegistration->user_id = Auth::user()->id;
             $newRegistration->save();
 
+            return response()->json(['message' => 'Event joined successfully.'], 200);
+        } else {
+            return response()->json(['message' => 'You have already joined this event.'], 422);
+        }
+    }
+
+    public function unjoin_event(Request $request)
+    {
+
+        if (!$request->has('id')) {
+            return response()->json(['message' => 'Event id is required.'], 422);
+        }
+
+        // Belirli bir etkinlik için kullanıcının kaydını kontrol ediyoruz
+        $register = Registration::where('event_id', $request->id)
+            ->where('user_id', Auth::user()->id)
+            ->first();
+
+        if ($register) {
+            $register->delete();
+
+            return response()->json(['message' => 'Event left successfully.'], 200);
         }
     }
 
