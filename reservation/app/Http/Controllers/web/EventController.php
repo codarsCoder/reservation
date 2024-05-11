@@ -9,6 +9,7 @@ use App\Models\Registration;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
@@ -22,15 +23,20 @@ class EventController extends Controller
     public function create_event(Request $request)
     {
         // Formdan gelen verileri doğrulama
-        $request->validate([
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'date' => 'required|date',
             'time' => 'required|date_format:H:i',
         ]);
 
-        $expireDate = $request->date.' '. $request->time; // '2022-12-31 12:00'; // Hedef tarih
-        $expireDate = strtotime($expireDate);
+        // Doğrulama başarısız ise hata mesajlarını döndür
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $expireDate = Carbon::parse($request->date.' '.$request->time)->toDateTimeString();
 
         // Etkinlik oluşturulacak veriyi oluşturma
         $event = new Event();
@@ -58,8 +64,8 @@ class EventController extends Controller
     }
     public function update_event(Request $request, $id)
     {
-        $expireDate = $request->date.' '. $request->time; // '2022-12-31 12:00'; // Hedef tarih
-        $expireDate = strtotime($expireDate);
+
+        $expireDate = Carbon::parse($request->date.' '.$request->time)->toDateTimeString();
 
         // Formdan gelen verileri görme
         $event = Event::where('user_id', Auth::user()->id)->find($id);
@@ -71,8 +77,8 @@ class EventController extends Controller
 
         // Veriyi veritabanına kaydetme
         $event->save();
-
-        return view('edit_event', compact('event'));
+        $success = 'Event updated successfully.';
+        return view('edit_event', compact('event', 'success'));
     }
 
     public function delete_event($id)
@@ -89,9 +95,9 @@ class EventController extends Controller
 
     public function all_events() {
 
-        // Tüm etkinlikleri al
-        $currentTimestamp = time();
-        $all_events = Event::where('expire_at', '>=', $currentTimestamp)->get();
+        $currentDateTime = Carbon::now()->toDateTimeString();
+
+        $all_events = Event::where('expire_at', '>=', $currentDateTime )->get();
 
         // Kullanıcının satın aldığı etkinlikleri al
         $joined_events = Registration::where('user_id', Auth::user()->id)->pluck('event_id')->toArray();

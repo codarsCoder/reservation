@@ -26,8 +26,7 @@ class ApiEventController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $expireDate = $request->date.' '. $request->time; // '2022-12-31 12:00'; // Hedef tarih
-        $expireDate = strtotime($expireDate);
+        $expireDate = Carbon::parse($request->date.' '.$request->time)->toDateTimeString();
         // Etkinlik oluşturulacak veriyi oluşturma
         $event = new Event();
         $event->user_id = Auth::user()->id;
@@ -58,8 +57,7 @@ class ApiEventController extends Controller
             return response()->json(['message' => 'Event id is required.'], 422);
         }
 
-        $expireDate = $request->date.' '. $request->time; // '2022-12-31 12:00'; // Hedef tarih
-        $expireDate = strtotime($expireDate);
+        $expireDate = Carbon::parse($request->date.' '.$request->time)->toDateTimeString();
 
         $event = Event::where('user_id', Auth::user()->id)->find($request->id);
         $event->name = $request->name;
@@ -99,8 +97,9 @@ class ApiEventController extends Controller
     public function all_events()
     {
 
-        $currentTimestamp = time();
-        $all_events = Event::where('expire_at', '>=', $currentTimestamp)->get();
+        // $currentDateTime = date('Y-m-d H:i:s');
+        $currentDateTime = Carbon::now()->toDateTimeString();
+        $all_events = Event::where('expire_at', '>=', $currentDateTime)->get();
 
         return response()->json(['events' => $all_events], 200);
 

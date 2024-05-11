@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->date('date');
             $table->time('time');
-            $table->integer('expire_at')->nullable();
+            $table->dateTime('expire_at')->nullable();
             $table->timestamps();
         });
     }

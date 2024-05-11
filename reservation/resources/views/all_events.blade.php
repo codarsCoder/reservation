@@ -11,14 +11,14 @@ Join To Events
     <h1>Join To Events</h1>
     <h4>All Events</h4>
     @if(isset($success))
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-primary" role="alert">
         {{ $success }}
     </div>
 @endif
 
-@if(isset($errors))
+@if(isset($error))
         <div class="alert alert-danger" role="alert">
-            {{ $errors }}
+            {{ $error}}
         </div>
 
 @endif

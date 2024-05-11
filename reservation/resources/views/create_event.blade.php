@@ -10,7 +10,7 @@
             <div class="col-12 col-md-8">
                 <h1>Create Event</h1>
                 @if (session('success'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-primary" role="alert">
                         {{ session('success') }}
                     </div>
                 @endif

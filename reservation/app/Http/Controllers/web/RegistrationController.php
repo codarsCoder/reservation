@@ -51,9 +51,9 @@ class RegistrationController extends Controller
 
             return view('all_events', compact('all_events', 'success'));
         } else {
-            $errors = 'You have already registered for this event.';
+            $error = 'You have already registered for this event.';
 
-            return view('all_events', compact('all_events', 'errors'));
+            return view('all_events', compact('all_events', 'error'));
         }
     }
 
