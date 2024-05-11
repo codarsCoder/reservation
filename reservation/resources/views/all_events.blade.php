@@ -38,7 +38,7 @@ Join To Events
                 <td>{{ $event->name }}</td>
                 <td>{{ Str::limit($event->description, 100) }}</td>
                 <td>{{ $event->date }}</td>
-                <td>{{ $event->time }} {{$event->joined}}</td>
+                <td>{{ $event->time }}</td>
                 <td>
                     <button class="btn btn-info btn-sm show-event-details" data-event-id="{{ $event->id }}">Show</button>
                     @if(!$event->joined)
