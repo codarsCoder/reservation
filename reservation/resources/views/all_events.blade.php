@@ -26,10 +26,10 @@ Join To Events
         <thead>
             <tr>
                 <th style="width: 20%">Name</th>
-                <th style="width: 50%">Description</th>
+                <th style="width: 40%">Description</th>
                 <th style="width: 10%">Date</th>
                 <th style="width: 10%">Time</th>
-                <th style="width: 10%,text-align: end">Action</th>
+                <th style="width: 20%,text-align: end">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +40,7 @@ Join To Events
                 <td>{{ $event->date }}</td>
                 <td>{{ $event->time }} {{$event->joined}}</td>
                 <td>
+                    <button class="btn btn-info btn-sm show-event-details" data-event-id="{{ $event->id }}">Show</button>
                     @if(!$event->joined)
                     <a href="{{ route('join.event', $event->id) }}"
                        class="btn btn-primary btn-sm">Join</a>
