@@ -26,10 +26,10 @@ Join To Events
         <thead>
             <tr>
                 <th style="width: 20%">Name</th>
-                <th style="width: 40%">Description</th>
+                <th style="width: 50%">Description</th>
                 <th style="width: 10%">Date</th>
                 <th style="width: 10%">Time</th>
-                <th style="width: 20%,text-align: end">Action</th>
+                <th style="width: 10%,text-align: end">Action</th>
             </tr>
         </thead>
         <tbody>
