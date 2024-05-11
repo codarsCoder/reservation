@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container">
-      <a class="navbar-brand text-primary" href="#">EVENTOR</a>
+      <a class="navbar-brand text-primary" href="{{ route('home') }}">EVENTOR</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -14,7 +14,7 @@
             <a class="nav-link @if(Route::currentRouteName() == 'create.event.page') active @endif" aria-current="page" href="{{ route('create.event.page') }}">Create Event</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link @if(Route::currentRouteName() == 'events.page') active @endif" aria-current="page" href="{{ route('events.page') }}">Join To Event</a>
+            <a class="nav-link @if(Route::currentRouteName() == 'events.page' || Route::currentRouteName() == 'join.event') active @endif" aria-current="page" href="{{ route('events.page') }}">Join To Event</a>
           </li>
         </ul>
    <div class="d-flex gap-3 align-items-center">
