@@ -8,7 +8,7 @@ Join To Events
 @endsection
 
 @section('main')<div class="container">
-    <h1>Join To Events</h1>
+    <h1 class="mb-5">Join To Events</h1>
     <h4>All Events</h4>
     @if(isset($success))
     <div class="alert alert-primary" role="alert">

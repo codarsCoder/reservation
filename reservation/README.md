@@ -1,8 +1,7 @@
 composer install
+php artisan key:generate
 php artisan migrate
-
-php artisan db:seed --class=DatabaseSeeder
-php artisan db:seed  genel
+php artisan db:seed 
 php artisan serve
 
 

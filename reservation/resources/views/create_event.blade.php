@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-8">
-                <h1>Create Event</h1>
+                <h1 class="mb-5">Create Event</h1>
                 @if (session('success'))
                     <div class="alert alert-primary" role="alert">
                         {{ session('success') }}
@@ -43,7 +43,8 @@
 
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-            @endsection
+            </div>
         </div>
     </div>
-</div>
+
+@endsection
