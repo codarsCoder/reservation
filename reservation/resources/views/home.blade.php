@@ -88,10 +88,12 @@ Home
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h5></h5>
-                <p id="eventName"></p>
+                <h5>Event Name:</h5>
+                <p class="fw-bold" id="eventName"></p>
+                <h5>Event Description:</h5>
                 <p id="eventDetails"></p>
-                <p id="eventDate"></p>
+                <h5>Event Date:</h5>
+                <p class="text-muted fs-6 fw-bold" id="eventDate"></p>
 
             </div>
             <div class="modal-footer">
