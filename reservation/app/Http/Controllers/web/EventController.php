@@ -15,7 +15,7 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::where('user_id', Auth::user()->id)->get();
+        $events = Event::where('user_id', Auth::user()->id)->orderBy('expire_at', 'desc')->get();
         $joined_events = Registration::where('user_id', Auth::user()->id)->with('event')->get();
         return view('home', compact('events', 'joined_events'));
     }
@@ -90,7 +90,7 @@ class EventController extends Controller
         return response()->json(['message' => 'Event not found.'], 404);
        }
     }
-    
+
     public function delete_event($id)
     {
         $event = Event::find($id);
@@ -107,7 +107,7 @@ class EventController extends Controller
 
         $currentDateTime = Carbon::now()->toDateTimeString();
 
-        $all_events = Event::where('expire_at', '>=', $currentDateTime )->get();
+        $all_events = Event::where('expire_at', '>=', $currentDateTime )->orderBy('expire_at', 'desc')->get();
 
         // Kullanıcının satın aldığı etkinlikleri al
         $joined_events = Registration::where('user_id', Auth::user()->id)->pluck('event_id')->toArray();

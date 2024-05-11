@@ -109,7 +109,7 @@ class ApiEventController extends Controller
 
         // $currentDateTime = date('Y-m-d H:i:s');
         $currentDateTime = Carbon::now()->toDateTimeString();
-        $all_events = Event::where('expire_at', '>=', $currentDateTime)->get();
+        $all_events = Event::where('expire_at', '>=', $currentDateTime)->orderBy('expire_at', 'desc')->get();
 
         return response()->json(['events' => $all_events], 200);
 
