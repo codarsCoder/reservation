@@ -1,27 +1,36 @@
 <?php
+use App\Models\Event;
 
-namespace Database\Seeders;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Registration;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
+    public function run()
     {
-        \App\Models\User::factory(20)->create();
+        // Kullanıcılar oluştur
+        \App\Models\User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('12345678'),
+        ]);
 
         \App\Models\User::factory()->create([
-            'name' => "Admin",
-            'email' => "admin@admin.com",
-            'email_verified_at' => now(),
-            'password' => Hash::make(12345678),
-            'remember_token' => Str::random(10),
+            'name' => 'john',
+            'email' => 'john@eventor.com',
+            'password' => bcrypt('12345678'),
         ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Mark',
+            'email' => 'mark@eventor.com',
+            'password' => bcrypt('12345678'),
+        ]);
+
+
+        // Event'leri ve Registration'ları oluştur
+        \App\Models\User::all()->each(function ($user) {
+            Event::factory(3)->create(['user_id' => $user->id]);
+        });
     }
 }
