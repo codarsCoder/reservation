@@ -81,6 +81,16 @@ class EventController extends Controller
         return view('edit_event', compact('event', 'success'));
     }
 
+    public function event_detail($id)
+    {
+       $event = Event::find($id);
+       if($event) {
+        return response()->json(['event' => $event], 200);
+    }else {
+        return response()->json(['message' => 'Event not found.'], 404);
+       }
+    }
+    
     public function delete_event($id)
     {
         $event = Event::find($id);

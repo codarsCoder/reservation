@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
+Route::get('event-detail/{id}', [EventController::class, 'event_detail']);
 
 // Auth pages
 Route::post('/login', [UserController::class, 'login'])->name('login');

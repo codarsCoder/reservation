@@ -71,6 +71,16 @@ class ApiEventController extends Controller
         return response()->json(['message' => 'Event updated successfully.'], 200);
     }
 
+    public function event_detail($id)
+    {
+       $event = Event::find($id);
+       if($event) {
+        return response()->json(['event' => $event], 200);
+       }else {
+        return response()->json(['message' => 'Event not found.'], 404);
+       }
+    }
+
     public function delete_event(Request $request)
     {
         if (!$request->has('id')) {
