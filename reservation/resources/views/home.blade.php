@@ -25,18 +25,18 @@ Home
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Action</th>
+                <th style="width: 20%">Name</th>
+                <th style="width: 50%">Description</th>
+                <th style="width: 10%">Date</th>
+                <th style="width: 10%">Time</th>
+                <th style="width: 10%,text-align: end">Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($events as $event)
             <tr>
                 <td>{{ $event->name }}</td>
-                <td>{{ $event->description }}</td>
+                <td>{{ Str::limit($event->description, 100) }}</td>
                 <td>{{ $event->date }}</td>
                 <td>{{ $event->time }}</td>
                 <td>
@@ -53,18 +53,18 @@ Home
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Action</th>
+                <th style="width: 20%">Name</th>
+                <th style="width: 50%">Description</th>
+                <th style="width: 10%">Date</th>
+                <th style="width: 10%">Time</th>
+                <th style="width: 10%,text-align: end">Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($joined_events as $event)
             <tr>
                 <td>{{ $event->event->name }}</td>
-                <td>{{ $event->event->description }}</td>
+                <td>{{ Str::limit($event->description, 100) }}</td>
                 <td>{{ $event->event->date }}</td>
                 <td>{{ $event->event->time }}</td>
                 <td>

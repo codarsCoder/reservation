@@ -25,18 +25,18 @@ Join To Events
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Action</th>
+                <th style="width: 20%">Name</th>
+                <th style="width: 50%">Description</th>
+                <th style="width: 10%">Date</th>
+                <th style="width: 10%">Time</th>
+                <th style="width: 10%,text-align: end">Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($all_events as $event)
             <tr>
                 <td>{{ $event->name }}</td>
-                <td>{{ $event->description }}</td>
+                <td>{{ Str::limit($event->description, 100) }}</td>
                 <td>{{ $event->date }}</td>
                 <td>{{ $event->time }} {{$event->joined}}</td>
                 <td>
